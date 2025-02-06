@@ -1,0 +1,384 @@
+\documentclass{l3doc}
+
+
+\usepackage{siunitx}
+\usepackage{argproc}
+
+\title{The \pkg{argproc} package\\ Handle user input into integer, dimen, skip, and muskip expressions}
+\author{Oliver Beery}
+\date{Version 0.0.0\quad{}5 February 2025}
+
+
+\begin{document}
+
+
+\maketitle
+
+
+\section{About}
+\label{sec:about}
+
+The \pkg{argproc} package provides \pkg{expl3} programming and macro support for creating user interfaces that take user input into integer, dimen, skip, and muskip expressions.
+The corresponding \eTeX{} primitives---\cs{numexpr}, \cs{dimexpr}, \cs{glueexpr}, and \cs{muexpr}---expand and evaluate the following tokens and leave the remaining tokens, if any, in the input stream.
+This can be problematic if the user provides additional tokens that are not needed in the expression and can lead to unexpected results and low-level errors.
+This package provides commands that issue an error if the user inputs any extra trailing tokens that were not processed by the expression.
+This package also allows the programmer to append a default unit of measurement in dimen and skip expressions for user convenience.
+
+
+\section{Loading the package}
+\label{sec:loading the package}
+
+Requirements:
+\begin{itemize}
+  \item \LaTeXe{} version 2023-11-01 or newer
+  \item \pkg{l3kernel} version 2023-10-10 or newer
+\end{itemize}
+
+You may need to ensure that your \LaTeX{} installation is up-to-date before using this package.
+
+
+\section{Argument processors}
+\label{sec:argumentprocessors}
+
+This section documents the argument processors provided by the \pkg{argproc} package.
+For more information on argument processors, see \pkg{usrguide}.%
+\footnote{\url{https://ctan.org/pkg/usrguide}}
+
+\begin{function}{\argproc_int:n}
+  \begin{syntax}
+    \cs{argproc_int:n} \Arg{integer expression}
+  \end{syntax}
+  Argument processor for use in \cs{NewDocumentCommand} and friends.
+  Evaluates \meta{integer expression} and stores the result in \cs{ProcessedArgument}.
+  Issues an error if \meta{integer expression} contains any extra trailing tokens that were not processed by \meta{integer expression}.
+\end{function}
+
+\begin{function}{\argproc_dim:nn,\argproc_dim:n}
+  \begin{syntax}
+    \cs{argproc_dim:nn} \Arg{unit} \Arg{dimen expression}
+    \cs{argproc_dim:n} \Arg{dimen expression}
+  \end{syntax}
+  Argument processor for use in \cs{NewDocumentCommand} and friends.
+  Evaluates \meta{dimen expression}, appending a default unit of \meta{unit}, and stores the result in \cs{Pro\-cessed\-Ar\-gu\-ment}.
+  When fully expanded, \meta{unit} must either match a valid unit of measurement or expand to nothing.
+  Issues an error if \meta{dimen expression} contains any extra trailing tokens that were not processed by \meta{dimen expression}, appending a default unit of \meta{unit}.
+  \cs{argproc_dim:n} does not append a default unit.
+\end{function}
+
+\begin{function}{\argproc_skip:nn,\argproc_skip:n}
+  \begin{syntax}
+    \cs{argproc_skip:nn} \Arg{unit} \Arg{skip expression}
+    \cs{argproc_skip:n} \Arg{skip expression}
+  \end{syntax}
+  Argument processor for use in \cs{NewDocumentCommand} and friends.
+  Evaluates \meta{skip expression}, appending a default unit of \meta{unit}, and stores the result in \cs{Pro\-cessed\-Ar\-gu\-ment}.
+  When fully expanded, \meta{unit} must either match a valid unit of measurement or expand to nothing.
+  Issues an error if \meta{skip expression} contains any extra trailing tokens that were not processed by \meta{skip expression}, appending a default unit of \meta{unit}.
+  \cs{argproc_skip:n} does not append a default unit.
+\end{function}
+
+\begin{function}{\argproc_muskip:n}
+  \begin{syntax}
+    \cs{argproc_muskip:n} \Arg{muskip expression}
+  \end{syntax}
+  Argument processor for use in \cs{NewDocumentCommand} and friends.
+  Evaluates \meta{muskip expression} and stores the result in \cs{ProcessedArgument}.
+  Issues an error if \meta{muskip expression} contains any extra trailing tokens that were not processed by \meta{muskip expression}.
+\end{function}
+
+
+\section{Setting integer, dimen, skip, and muskip variables from user input}
+\label{sec:programming}
+
+
+\subsection{Setting integer variables from user input}
+\label{subsec:integers}
+
+\begin{function}
+  {
+    \argproc_int_set_from_user:Nn,
+      \argproc_int_set_from_user:cn,
+      \argproc_int_set_from_user:NV,
+      \argproc_int_set_from_user:cV,
+    \argproc_int_gset_from_user:Nn,
+      \argproc_int_gset_from_user:cn,
+      \argproc_int_gset_from_user:NV,
+      \argproc_int_gset_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_int_set_from_user:Nn} \meta{integer variable} \Arg{integer expression}
+  \end{syntax}
+  Sets \meta{integer variable} to the value of \meta{integer expression}.
+  \meta{integer expression} should contain the tokens input by the user.
+  Issues an error if \meta{integer expression} contains any extra trailing tokens that were not processed by \meta{integer expression}.
+\end{function}
+
+\begin{function}
+    {
+      \argproc_int_add_from_user:Nn,
+        \argproc_int_add_from_user:cn,
+        \argproc_int_add_from_user:NV,
+        \argproc_int_add_from_user:cV,
+      \argproc_int_gadd_from_user:Nn,
+        \argproc_int_gadd_from_user:cn,
+        \argproc_int_gadd_from_user:NV,
+        \argproc_int_gadd_from_user:cV
+    }
+  \begin{syntax}
+    \cs{argproc_int_add_from_user:Nn} \meta{integer variable} \Arg{integer expression}
+  \end{syntax}
+  Identical to \cs{argproc_int_set_from_user:Nn}, but sets \meta{integer variable} equal to its current value plus the result of \meta{integer expression}.
+\end{function}
+
+\begin{function}
+  {
+    \argproc_int_sub_from_user:Nn,
+      \argproc_int_sub_from_user:cn,
+      \argproc_int_sub_from_user:NV,
+      \argproc_int_sub_from_user:cV,
+    \argproc_int_gsub_from_user:Nn,
+      \argproc_int_gsub_from_user:cn,
+      \argproc_int_gsub_from_user:NV,
+      \argproc_int_gsub_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_int_sub_from_user:Nn} \meta{integer variable} \Arg{integer expression}
+  \end{syntax}
+  Identical to \cs{argproc_int_set_from_user:Nn}, but sets \meta{integer variable} equal to its current value minus the result of \meta{integer expression}.
+\end{function}
+
+
+\subsection{Setting dimen variables from user input}
+\label{subsec:dimens}
+
+\begin{function}
+  {
+    \argproc_dim_set_from_user:Nnn,
+      \argproc_dim_set_from_user:cnn,
+      \argproc_dim_set_from_user:NVn,
+      \argproc_dim_set_from_user:cVn,
+    \argproc_dim_gset_from_user:Nnn,
+      \argproc_dim_gset_from_user:cnn,
+      \argproc_dim_gset_from_user:NVn,
+      \argproc_dim_gset_from_user:cVn,
+    \argproc_dim_set_from_user:Nn,
+      \argproc_dim_set_from_user:cn,
+      \argproc_dim_set_from_user:NV,
+      \argproc_dim_set_from_user:cV,
+    \argproc_dim_gset_from_user:Nn,
+      \argproc_dim_gset_from_user:cn,
+      \argproc_dim_gset_from_user:NV,
+      \argproc_dim_gset_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_dim_set_from_user:Nnn} \meta{dimen variable} \Arg{dimen expression} \Arg{unit}
+    \cs{argproc_dim_set_from_user:Nn} \meta{dimen variable} \Arg{dimen expression}
+  \end{syntax}
+  Sets \meta{dimen variable} to the value of \meta{dimen expression}, appending a default unit of \meta{unit}.
+  \meta{dimen expression} should contain the tokens input by the user.
+  When fully expanded, \meta{unit} must either match a valid unit of measurement or expand to nothing.
+  Issues an error if \meta{dimen expression} contains any extra trailing tokens that were not processed by \meta{dimen expression}, appending a default unit of \meta{unit}.
+  \cs{argproc_dim_set_from_user:Nn} and friends do not append a default unit.
+\end{function}
+
+\begin{function}
+  {
+    \argproc_dim_add_from_user:Nnn,
+      \argproc_dim_add_from_user:cnn,
+      \argproc_dim_add_from_user:NVn,
+      \argproc_dim_add_from_user:cVn,
+    \argproc_dim_gadd_from_user:Nnn,
+      \argproc_dim_gadd_from_user:cnn,
+      \argproc_dim_gadd_from_user:NVn,
+      \argproc_dim_gadd_from_user:cVn,
+    \argproc_dim_add_from_user:Nn,
+      \argproc_dim_add_from_user:cn,
+      \argproc_dim_add_from_user:NV,
+      \argproc_dim_add_from_user:cV,
+    \argproc_dim_gadd_from_user:Nn,
+      \argproc_dim_gadd_from_user:cn,
+      \argproc_dim_gadd_from_user:NV,
+      \argproc_dim_gadd_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_dim_add_from_user:Nnn} \meta{dimen variable} \Arg{dimen expression} \Arg{unit}
+    \cs{argproc_dim_add_from_user:Nn} \meta{dimen variable} \Arg{dimen expression}
+  \end{syntax}
+  Identical to \cs{argproc_dim_set_from_user:Nnn}, but sets \meta{dimen variable} equal to its current value plus the result of \meta{dimen expression}, appending a default unit of \meta{unit}.
+  \cs{argproc_dim_add_from_user:Nn} and friends do not append a default unit.
+\end{function}
+
+\begin{function}
+  {
+    \argproc_dim_sub_from_user:Nnn,
+      \argproc_dim_sub_from_user:cnn,
+      \argproc_dim_sub_from_user:NVn,
+      \argproc_dim_sub_from_user:cVn,
+    \argproc_dim_gsub_from_user:Nnn,
+      \argproc_dim_gsub_from_user:cnn,
+      \argproc_dim_gsub_from_user:NVn,
+      \argproc_dim_gsub_from_user:cVn,
+    \argproc_dim_sub_from_user:Nn,
+      \argproc_dim_sub_from_user:cn,
+      \argproc_dim_sub_from_user:NV,
+      \argproc_dim_sub_from_user:cV,
+    \argproc_dim_gsub_from_user:Nn,
+      \argproc_dim_gsub_from_user:cn,
+      \argproc_dim_gsub_from_user:NV,
+      \argproc_dim_gsub_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_dim_sub_from_user:Nnn} \meta{dimen variable} \Arg{dimen expression} \Arg{unit}
+    \cs{argproc_dim_sub_from_user:Nn} \meta{dimen variable} \Arg{dimen expression}
+  \end{syntax}
+  Identical to \cs{argproc_dim_set_from_user:Nnn}, but sets \meta{dimen variable} equal to its current value minus the result of \meta{dimen expression}, appending a default unit of \meta{unit}.
+  \cs{argproc_dim_sub_from_user:Nn} and friends do not append a default unit.
+\end{function}
+
+
+\subsection{Setting skip variables from user input}
+\label{subsec:skips}
+
+\begin{function}
+  {
+    \argproc_skip_set_from_user:Nnn,
+      \argproc_skip_set_from_user:cnn,
+      \argproc_skip_set_from_user:NVn,
+      \argproc_skip_set_from_user:cVn,
+    \argproc_skip_gset_from_user:Nnn,
+      \argproc_skip_gset_from_user:cnn,
+      \argproc_skip_gset_from_user:NVn,
+      \argproc_skip_gset_from_user:cVn,
+    \argproc_skip_set_from_user:Nn,
+      \argproc_skip_set_from_user:cn,
+      \argproc_skip_set_from_user:NV,
+      \argproc_skip_set_from_user:cV,
+    \argproc_skip_gset_from_user:Nn,
+      \argproc_skip_gset_from_user:cn,
+      \argproc_skip_gset_from_user:NV,
+      \argproc_skip_gset_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_skip_set_from_user:Nnn} \meta{skip variable} \Arg{skip expression} \Arg{unit}
+    \cs{argproc_skip_set_from_user:Nn} \meta{skip variable} \Arg{skip expression}
+  \end{syntax}
+  Sets \meta{skip variable} to the value of \meta{skip expression}, appending a default unit of \meta{unit}.
+  \meta{skip expression} should contain the tokens input by the user.
+  When fully expanded, \meta{unit} must either match a valid unit of measurement or expand to nothing.
+  Issues an error if \meta{skip expression} contains any extra trailing tokens that were not processed by \meta{skip expression}, appending a default unit of \meta{unit}.
+  \cs{argproc_skip_set_from_user:Nn} and friends do not append a default unit.
+\end{function}
+
+\begin{function}
+  {
+    \argproc_skip_add_from_user:Nnn,
+      \argproc_skip_add_from_user:cnn,
+      \argproc_skip_add_from_user:NVn,
+      \argproc_skip_add_from_user:cVn,
+    \argproc_skip_gadd_from_user:Nnn,
+      \argproc_skip_gadd_from_user:cnn,
+      \argproc_skip_gadd_from_user:NVn,
+      \argproc_skip_gadd_from_user:cVn,
+    \argproc_skip_add_from_user:Nn,
+      \argproc_skip_add_from_user:cn,
+      \argproc_skip_add_from_user:NV,
+      \argproc_skip_add_from_user:cV,
+    \argproc_skip_gadd_from_user:Nn,
+      \argproc_skip_gadd_from_user:cn,
+      \argproc_skip_gadd_from_user:NV,
+      \argproc_skip_gadd_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_skip_add_from_user:Nnn} \meta{skip variable} \Arg{skip expression} \Arg{unit}
+    \cs{argproc_skip_add_from_user:Nn} \meta{skip variable} \Arg{skip expression}
+  \end{syntax}
+  Identical to \cs{argproc_skip_set_from_user:Nnn}, but sets \meta{skip variable} equal to its current value plus the result of \meta{skip expression}, appending a default unit of \meta{unit}.
+  \cs{argproc_skip_add_from_user:Nn} and friends do not append a default unit.
+\end{function}
+
+\begin{function}
+  {
+    \argproc_skip_sub_from_user:Nnn,
+      \argproc_skip_sub_from_user:cnn,
+      \argproc_skip_sub_from_user:NVn,
+      \argproc_skip_sub_from_user:cVn,
+    \argproc_skip_gsub_from_user:Nnn,
+      \argproc_skip_gsub_from_user:cnn,
+      \argproc_skip_gsub_from_user:NVn,
+      \argproc_skip_gsub_from_user:cVn,
+    \argproc_skip_sub_from_user:Nn,
+      \argproc_skip_sub_from_user:cn,
+      \argproc_skip_sub_from_user:NV,
+      \argproc_skip_sub_from_user:cV,
+    \argproc_skip_gsub_from_user:Nn,
+      \argproc_skip_gsub_from_user:cn,
+      \argproc_skip_gsub_from_user:NV,
+      \argproc_skip_gsub_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_skip_sub_from_user:Nnn} \meta{skip variable} \Arg{skip expression} \Arg{unit}
+    \cs{argproc_skip_sub_from_user:Nn} \meta{skip variable} \Arg{skip expression}
+  \end{syntax}
+  Identical to \cs{argproc_skip_set_from_user:Nnn}, but sets \meta{skip variable} equal to its current value minus the result of \meta{skip expression}, appending a default unit of \meta{unit}.
+  \cs{argproc_skip_sub_from_user:Nn} and friends do not append a default unit.
+\end{function}
+
+
+\subsection{Setting muskip variables from user input}
+\label{subsec:muskips}
+
+\begin{function}
+  {
+    \argproc_muskip_set_from_user:Nn,
+      \argproc_muskip_set_from_user:cn,
+      \argproc_muskip_set_from_user:NV,
+      \argproc_muskip_set_from_user:cV,
+    \argproc_muskip_gset_from_user:Nn,
+      \argproc_muskip_gset_from_user:cn,
+      \argproc_muskip_gset_from_user:NV,
+      \argproc_muskip_gset_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_muskip_set_from_user:Nn} \meta{muskip variable} \Arg{muskip expression}
+  \end{syntax}
+  Sets \meta{muskip variable} to the value of \meta{muskip expression}.
+  \meta{muskip expression} should contain the tokens input by the user.
+  Issues an error if \meta{muskip expression} contains any extra trailing tokens that were not processed by \meta{muskip expression}.
+\end{function}
+
+\begin{function}
+  {
+    \argproc_muskip_add_from_user:Nn,
+      \argproc_muskip_add_from_user:cn,
+      \argproc_muskip_add_from_user:NV,
+      \argproc_muskip_add_from_user:cV,
+    \argproc_muskip_gadd_from_user:Nn,
+      \argproc_muskip_gadd_from_user:cn,
+      \argproc_muskip_gadd_from_user:NV,
+      \argproc_muskip_gadd_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_muskip_add_from_user:Nn} \meta{muskip variable} \Arg{muskip expression}
+  \end{syntax}
+  Identical to \cs{argproc_muskip_set_from_user:Nn}, but sets \meta{muskip variable} equal to its current value plus the result of \meta{muskip expression}.
+\end{function}
+
+\begin{function}
+  {
+    \argproc_muskip_sub_from_user:Nn,
+      \argproc_muskip_sub_from_user:cn,
+      \argproc_muskip_sub_from_user:NV,
+      \argproc_muskip_sub_from_user:cV,
+    \argproc_muskip_gsub_from_user:Nn,
+      \argproc_muskip_gsub_from_user:cn,
+      \argproc_muskip_gsub_from_user:NV,
+      \argproc_muskip_gsub_from_user:cV
+  }
+  \begin{syntax}
+    \cs{argproc_muskip_sub_from_user:Nn} \meta{muskip variable} \Arg{muskip expression}
+  \end{syntax}
+  Identical to \cs{argproc_muskip_set_from_user:Nn}, but sets \meta{muskip variable} equal to its current value minus the result of \meta{muskip expression}.
+\end{function}
+
+
+\end{document}
