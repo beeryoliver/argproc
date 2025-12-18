@@ -11,9 +11,10 @@
 \clubpenalty=10000
 \widowpenalty=10000
 
-\title{The \pkg{argproc} package\\ Handle user input into integer, dimen, skip, and muskip expressions}
+\title{The \pkg{argproc} package\\
+Handle user input into integer, dimen, skip, and muskip expressions}
 \author{Oliver Beery}
-\date{Version 0.0.0\quad 8 November 2025}
+\date{Version 0.0.0\quad 18 December 2025}
 
 
 \begin{document}
@@ -25,11 +26,19 @@
 \section{About}
 \label{sec:about}
 
-The \pkg{argproc} package provides \pkg{expl3} programming and macro support for creating user interfaces that take user input into integer, dimen, skip, and muskip expressions.
-The corresponding \eTeX{} primitives---\cs{numexpr}, \cs{dimexpr}, \cs{glueexpr}, and \cs{muexpr}---expand and evaluate the following tokens and leave the remaining tokens, if any, in the input stream.
-This can be problematic if the user provides additional tokens that are not needed in the expression and can lead to unexpected results and low-level errors.
-This package provides commands that issue an error if the user inputs any extra trailing tokens that were not processed by the expression.
-This package also allows the programmer to append a default unit of measurement in dimen and skip expressions for user convenience.
+The \pkg{argproc} package provides \pkg{expl3} programming and macro support
+for creating user interfaces that take user input into integer, dimen, skip,
+and muskip expressions.
+The corresponding \eTeX{} primitives---\cs{numexpr}, \cs{dimexpr},
+\cs{glueexpr}, and \cs{muexpr}---expand and evaluate the following tokens and
+leave the remaining tokens, if any, in the input stream.
+This can be problematic if the user provides additional tokens that are not
+needed in the expression and can lead to unexpected results and low-level
+errors.
+This package provides commands that issue an error if the user inputs any
+extra trailing tokens that were not processed by the expression.
+This package also allows the programmer to append a default unit of
+measurement in dimen and skip expressions for user convenience.
 
 
 \section{Loading the package}
@@ -45,7 +54,8 @@ Requirements:
 \section{Argument processors}
 \label{sec:argumentprocessors}
 
-This section documents the argument processors provided by the \pkg{argproc} package.
+This section documents the argument processors provided by the \pkg{argproc}
+package.
 For more information on argument processors, see \pkg{usrguide}.%
 \footnote{\url{https://ctan.org/pkg/usrguide}}
 
@@ -55,7 +65,8 @@ For more information on argument processors, see \pkg{usrguide}.%
   \end{syntax}
   Argument processor for use in \cs{NewDocumentCommand} and friends.
   Evaluates \meta{int expr} and stores the result in \cs{ProcessedArgument}.
-  Issues an error if \meta{int expr} contains any extra trailing tokens that were not processed by \meta{int expr}.
+  Issues an error if \meta{int expr} contains any extra trailing tokens that
+  were not processed by \meta{int expr}.
 \end{function}
 
 \begin{function}{\argproc_dim:nn,\argproc_dim:n}
@@ -64,9 +75,13 @@ For more information on argument processors, see \pkg{usrguide}.%
     \cs{argproc_dim:n} \Arg{dim expr}
   \end{syntax}
   Argument processor for use in \cs{NewDocumentCommand} and friends.
-  Evaluates \meta{dim expr}, appending a default unit of \meta{unit}, and stores the result in \cs{ProcessedArgument}.
-  When fully expanded, \meta{unit} must either match a valid unit of measurement or expand to nothing.
-  Issues an error if \meta{dim expr} contains any extra trailing tokens that were not processed by \meta{dim expr}, appending a default unit of \meta{unit}.
+  Evaluates \meta{dim expr}, appending a default unit of \meta{unit}, and
+  stores the result in \cs{ProcessedArgument}.
+  When fully expanded, \meta{unit} must either match a valid unit of
+  measurement or expand to nothing.
+  Issues an error if \meta{dim expr} contains any extra trailing tokens that
+  were not processed by \meta{dim expr}, appending a default unit of
+  \meta{unit}.
   \cs{argproc_dim:n} does not append a default unit.
 \end{function}
 
@@ -76,9 +91,13 @@ For more information on argument processors, see \pkg{usrguide}.%
     \cs{argproc_skip:n} \Arg{skip expr}
   \end{syntax}
   Argument processor for use in \cs{NewDocumentCommand} and friends.
-  Evaluates \meta{skip expr}, appending a default unit of \meta{unit}, and stores the result in \cs{ProcessedArgument}.
-  When fully expanded, \meta{unit} must either match a valid unit of measurement or expand to nothing.
-  Issues an error if \meta{skip expr} contains any extra trailing tokens that were not processed by \meta{skip expr}, appending a default unit of \meta{unit}.
+  Evaluates \meta{skip expr}, appending a default unit of \meta{unit}, and
+  stores the result in \cs{ProcessedArgument}.
+  When fully expanded, \meta{unit} must either match a valid unit of
+  measurement or expand to nothing.
+  Issues an error if \meta{skip expr} contains any extra trailing tokens that
+  were not processed by \meta{skip expr}, appending a default unit of
+  \meta{unit}.
   \cs{argproc_skip:n} does not append a default unit.
 \end{function}
 
@@ -88,7 +107,8 @@ For more information on argument processors, see \pkg{usrguide}.%
   \end{syntax}
   Argument processor for use in \cs{NewDocumentCommand} and friends.
   Evaluates \meta{muskip expr} and stores the result in \cs{ProcessedArgument}.
-  Issues an error if \meta{muskip expr} contains any extra trailing tokens that were not processed by \meta{muskip expr}.
+  Issues an error if \meta{muskip expr} contains any extra trailing tokens
+  that were not processed by \meta{muskip expr}.
 \end{function}
 
 
@@ -115,7 +135,8 @@ For more information on argument processors, see \pkg{usrguide}.%
   \end{syntax}
   Sets \meta{integer} to the value of \meta{int expr}.
   \meta{int expr} should contain the tokens input by the user.
-  Issues an error if \meta{int expr} contains any extra trailing tokens that were not processed by \meta{int expr}.
+  Issues an error if \meta{int expr} contains any extra trailing tokens that
+  were not processed by \meta{int expr}.
 \end{function}
 
 \begin{function}
@@ -132,7 +153,8 @@ For more information on argument processors, see \pkg{usrguide}.%
   \begin{syntax}
     \cs{argproc_int_add_from_user:Nn} \meta{integer} \Arg{int expr}
   \end{syntax}
-  Identical to \cs{argproc_int_set_from_user:Nn}, but sets \meta{integer} equal to its current value plus the result of \meta{int expr}.
+  Identical to \cs{argproc_int_set_from_user:Nn}, but sets \meta{integer}
+  equal to its current value plus the result of \meta{int expr}.
 \end{function}
 
 \begin{function}
@@ -149,7 +171,8 @@ For more information on argument processors, see \pkg{usrguide}.%
   \begin{syntax}
     \cs{argproc_int_sub_from_user:Nn} \meta{integer} \Arg{int expr}
   \end{syntax}
-  Identical to \cs{argproc_int_set_from_user:Nn}, but sets \meta{integer} equal to its current value minus the result of \meta{int expr}.
+  Identical to \cs{argproc_int_set_from_user:Nn}, but sets \meta{integer}
+  equal to its current value minus the result of \meta{int expr}.
 \end{function}
 
 
@@ -179,10 +202,13 @@ For more information on argument processors, see \pkg{usrguide}.%
     \cs{argproc_dim_set_from_user:Nnn} \meta{dimension} \Arg{dim expr} \Arg{unit}
     \cs{argproc_dim_set_from_user:Nn} \meta{dimension} \Arg{dim expr}
   \end{syntax}
-  Sets \meta{dimension} to the value of \meta{dim expr}, appending a default unit of \meta{unit}.
+  Sets \meta{dimension} to the value of \meta{dim expr}, appending a default
+  unit of \meta{unit}.
   \meta{dim expr} should contain the tokens input by the user.
-  When fully expanded, \meta{unit} must either match a valid unit of measurement or expand to nothing.
-  Issues an error if \meta{dim expr} contains any extra trailing tokens that were not processed by \meta{dim expr}, appending a default unit of \meta{unit}.
+  When fully expanded, \meta{unit} must either match a valid unit of
+  measurement or expand to nothing.
+  Issues an error if \meta{dim expr} contains any extra trailing tokens that were not processed by \meta{dim expr}, appending a default unit of
+  \meta{unit}.
   \cs{argproc_dim_set_from_user:Nn} and friends do not append a default unit.
 \end{function}
 
@@ -209,7 +235,9 @@ For more information on argument processors, see \pkg{usrguide}.%
     \cs{argproc_dim_add_from_user:Nnn} \meta{dimension} \Arg{dim expr} \Arg{unit}
     \cs{argproc_dim_add_from_user:Nn} \meta{dimension} \Arg{dim expr}
   \end{syntax}
-  Identical to \cs{argproc_dim_set_from_user:Nnn}, but sets \meta{dimension} equal to its current value plus the result of \meta{dim expr}, appending a default unit of \meta{unit}.
+  Identical to \cs{argproc_dim_set_from_user:Nnn}, but sets \meta{dimension}
+  equal to its current value plus the result of \meta{dim expr}, appending a
+  default unit of \meta{unit}.
   \cs{argproc_dim_add_from_user:Nn} and friends do not append a default unit.
 \end{function}
 
@@ -236,7 +264,9 @@ For more information on argument processors, see \pkg{usrguide}.%
     \cs{argproc_dim_sub_from_user:Nnn} \meta{dimension} \Arg{dim expr} \Arg{unit}
     \cs{argproc_dim_sub_from_user:Nn} \meta{dimension} \Arg{dim expr}
   \end{syntax}
-  Identical to \cs{argproc_dim_set_from_user:Nnn}, but sets \meta{dimension} equal to its current value minus the result of \meta{dim expr}, appending a default unit of \meta{unit}.
+  Identical to \cs{argproc_dim_set_from_user:Nnn}, but sets \meta{dimension}
+  equal to its current value minus the result of \meta{dim expr}, appending a
+  default unit of \meta{unit}.
   \cs{argproc_dim_sub_from_user:Nn} and friends do not append a default unit.
 \end{function}
 
@@ -267,10 +297,14 @@ For more information on argument processors, see \pkg{usrguide}.%
     \cs{argproc_skip_set_from_user:Nnn} \meta{skip} \Arg{skip expr} \Arg{unit}
     \cs{argproc_skip_set_from_user:Nn} \meta{skip} \Arg{skip expr}
   \end{syntax}
-  Sets \meta{skip} to the value of \meta{skip expr}, appending a default unit of \meta{unit}.
+  Sets \meta{skip} to the value of \meta{skip expr}, appending a default unit
+  of \meta{unit}.
   \meta{skip expr} should contain the tokens input by the user.
-  When fully expanded, \meta{unit} must either match a valid unit of measurement or expand to nothing.
-  Issues an error if \meta{skip expr} contains any extra trailing tokens that were not processed by \meta{skip expr}, appending a default unit of \meta{unit}.
+  When fully expanded, \meta{unit} must either match a valid unit of
+  measurement or expand to nothing.
+  Issues an error if \meta{skip expr} contains any extra trailing tokens that
+  were not processed by \meta{skip expr}, appending a default unit of
+  \meta{unit}.
   \cs{argproc_skip_set_from_user:Nn} and friends do not append a default unit.
 \end{function}
 
@@ -297,7 +331,9 @@ For more information on argument processors, see \pkg{usrguide}.%
     \cs{argproc_skip_add_from_user:Nnn} \meta{skip} \Arg{skip expr} \Arg{unit}
     \cs{argproc_skip_add_from_user:Nn} \meta{skip} \Arg{skip expr}
   \end{syntax}
-  Identical to \cs{argproc_skip_set_from_user:Nnn}, but sets \meta{skip} equal to its current value plus the result of \meta{skip expr}, appending a default unit of \meta{unit}.
+  Identical to \cs{argproc_skip_set_from_user:Nnn}, but sets \meta{skip} equal
+  to its current value plus the result of \meta{skip expr}, appending a
+  default unit of \meta{unit}.
   \cs{argproc_skip_add_from_user:Nn} and friends do not append a default unit.
 \end{function}
 
@@ -324,7 +360,9 @@ For more information on argument processors, see \pkg{usrguide}.%
     \cs{argproc_skip_sub_from_user:Nnn} \meta{skip} \Arg{skip expr} \Arg{unit}
     \cs{argproc_skip_sub_from_user:Nn} \meta{skip} \Arg{skip expr}
   \end{syntax}
-  Identical to \cs{argproc_skip_set_from_user:Nnn}, but sets \meta{skip} equal to its current value minus the result of \meta{skip expr}, appending a default unit of \meta{unit}.
+  Identical to \cs{argproc_skip_set_from_user:Nnn}, but sets \meta{skip} equal
+  to its current value minus the result of \meta{skip expr}, appending a
+  default unit of \meta{unit}.
   \cs{argproc_skip_sub_from_user:Nn} and friends do not append a default unit.
 \end{function}
 
@@ -348,7 +386,8 @@ For more information on argument processors, see \pkg{usrguide}.%
   \end{syntax}
   Sets \meta{muskip} to the value of \meta{muskip expr}.
   \meta{muskip expr} should contain the tokens input by the user.
-  Issues an error if \meta{muskip expr} contains any extra trailing tokens that were not processed by \meta{muskip expr}.
+  Issues an error if \meta{muskip expr} contains any extra trailing tokens
+  that were not processed by \meta{muskip expr}.
 \end{function}
 
 \begin{function}
@@ -365,7 +404,8 @@ For more information on argument processors, see \pkg{usrguide}.%
   \begin{syntax}
     \cs{argproc_muskip_add_from_user:Nn} \meta{muskip} \Arg{muskip expr}
   \end{syntax}
-  Identical to \cs{argproc_muskip_set_from_user:Nn}, but sets \meta{muskip} equal to its current value plus the result of \meta{muskip expr}.
+  Identical to \cs{argproc_muskip_set_from_user:Nn}, but sets \meta{muskip}
+  equal to its current value plus the result of \meta{muskip expr}.
 \end{function}
 
 \begin{function}
@@ -382,7 +422,8 @@ For more information on argument processors, see \pkg{usrguide}.%
   \begin{syntax}
     \cs{argproc_muskip_sub_from_user:Nn} \meta{muskip} \Arg{muskip expr}
   \end{syntax}
-  Identical to \cs{argproc_muskip_set_from_user:Nn}, but sets \meta{muskip} equal to its current value minus the result of \meta{muskip expr}.
+  Identical to \cs{argproc_muskip_set_from_user:Nn}, but sets \meta{muskip}
+  equal to its current value minus the result of \meta{muskip expr}.
 \end{function}
 
 
