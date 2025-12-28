@@ -57,7 +57,6 @@
 
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
-    \quark_if_recursion_tail_stop:N #1
     \cs_new_protected:Npn #1 ##1##2
       {
         \str_set:Nn \l__argproc_int_expr_str {##2}
@@ -66,17 +65,13 @@
         \__argproc_int_chk_end:
       }
     \cs_generate_variant:Nn #1 { NV , c , cV }
-    \__argproc_tmp:Nn
   }
-\__argproc_tmp:Nn
-  \argproc_int_set_from_user:Nn  { #1 = }
-  \argproc_int_gset_from_user:Nn { \global #1 = }
-  \argproc_int_add_from_user:Nn  { \advance #1 }
-  \argproc_int_gadd_from_user:Nn { \global \advance #1 }
-  \argproc_int_sub_from_user:Nn  { \advance #1 - }
-  \argproc_int_gsub_from_user:Nn { \global \advance #1 - }
-  \q_recursion_tail { }
-\q_recursion_stop
+\__argproc_tmp:Nn \argproc_int_set_from_user:Nn  { #1 = }
+\__argproc_tmp:Nn \argproc_int_gset_from_user:Nn { \global #1 = }
+\__argproc_tmp:Nn \argproc_int_add_from_user:Nn  { \advance #1 }
+\__argproc_tmp:Nn \argproc_int_gadd_from_user:Nn { \global \advance #1 }
+\__argproc_tmp:Nn \argproc_int_sub_from_user:Nn  { \advance #1 - }
+\__argproc_tmp:Nn \argproc_int_gsub_from_user:Nn { \global \advance #1 - }
 
 % Issues an error if the user inputs any extra trailing tokens that were not
 % processed by the integer expression.
@@ -93,7 +88,6 @@
 % provided as #1.
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
-    \quark_if_recursion_tail_stop:N #1
     \cs_new_protected:Npn #1 ##1##2##3
       {
         \str_set:Nn \l__argproc_dim_expr_str {##2}
@@ -104,17 +98,13 @@
         \__argproc_dim_chk_end:
       }
     \cs_generate_variant:Nn #1 { NV , c , cV }
-    \__argproc_tmp:Nn
   }
-\__argproc_tmp:Nn
-  \argproc_dim_set_from_user:Nnn  { #1 = }
-  \argproc_dim_gset_from_user:Nnn { \global #1 = }
-  \argproc_dim_add_from_user:Nnn  { \advance #1 }
-  \argproc_dim_gadd_from_user:Nnn { \global \advance #1 }
-  \argproc_dim_sub_from_user:Nnn  { \advance #1 - }
-  \argproc_dim_gsub_from_user:Nnn { \global \advance #1 - }
-  \q_recursion_tail { }
-\q_recursion_stop
+\__argproc_tmp:Nn \argproc_dim_set_from_user:Nnn  { #1 = }
+\__argproc_tmp:Nn \argproc_dim_gset_from_user:Nnn { \global #1 = }
+\__argproc_tmp:Nn \argproc_dim_add_from_user:Nnn  { \advance #1 }
+\__argproc_tmp:Nn \argproc_dim_gadd_from_user:Nnn { \global \advance #1 }
+\__argproc_tmp:Nn \argproc_dim_sub_from_user:Nnn  { \advance #1 - }
+\__argproc_tmp:Nn \argproc_dim_gsub_from_user:Nnn { \global \advance #1 - }
 
 % When testing whether the user has added extra trailing tokens to the dimen
 % expression, there are 3 cases:
@@ -147,7 +137,6 @@
 
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
-    \quark_if_recursion_tail_stop:N #1
     \cs_new_protected:Npn #1 ##1##2
       {
         \str_set:Nn \l__argproc_dim_expr_str {##2}
@@ -156,17 +145,13 @@
         \__argproc_dim_chk_no_unit_end:
       }
     \cs_generate_variant:Nn #1 { NV , c , cV }
-    \__argproc_tmp:Nn
   }
-\__argproc_tmp:Nn
-  \argproc_dim_set_from_user:Nn  { #1 = }
-  \argproc_dim_gset_from_user:Nn { \global #1 = }
-  \argproc_dim_add_from_user:Nn  { \advance #1 }
-  \argproc_dim_gadd_from_user:Nn { \global \advance #1 }
-  \argproc_dim_sub_from_user:Nn  { \advance #1 - }
-  \argproc_dim_gsub_from_user:Nn { \global \advance #1 - }
-  \q_recursion_tail { }
-\q_recursion_stop
+\__argproc_tmp:Nn \argproc_dim_set_from_user:Nn  { #1 = }
+\__argproc_tmp:Nn \argproc_dim_gset_from_user:Nn { \global #1 = }
+\__argproc_tmp:Nn \argproc_dim_add_from_user:Nn  { \advance #1 }
+\__argproc_tmp:Nn \argproc_dim_gadd_from_user:Nn { \global \advance #1 }
+\__argproc_tmp:Nn \argproc_dim_sub_from_user:Nn  { \advance #1 - }
+\__argproc_tmp:Nn \argproc_dim_gsub_from_user:Nn { \global \advance #1 - }
 
 \cs_new_protected:Npn \__argproc_dim_chk_no_unit:w #1
   \__argproc_dim_chk_no_unit_end:
@@ -180,7 +165,6 @@
 
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
-    \quark_if_recursion_tail_stop:N #1
     \cs_new_protected:Npn #1 ##1##2##3
       {
         \str_set:Nn \l__argproc_skip_expr_str {##2}
@@ -191,17 +175,13 @@
         \__argproc_skip_chk_end:
       }
     \cs_generate_variant:Nn #1 { NV , c , cV }
-    \__argproc_tmp:Nn
   }
-\__argproc_tmp:Nn
-  \argproc_skip_set_from_user:Nnn  { #1 = }
-  \argproc_skip_gset_from_user:Nnn { \global #1 = }
-  \argproc_skip_add_from_user:Nnn  { \advance #1 }
-  \argproc_skip_gadd_from_user:Nnn { \global \advance #1 }
-  \argproc_skip_sub_from_user:Nnn  { \advance #1 - }
-  \argproc_skip_gsub_from_user:Nnn { \global \advance #1 - }
-  \q_recursion_tail { }
-\q_recursion_stop
+\__argproc_tmp:Nn \argproc_skip_set_from_user:Nnn  { #1 = }
+\__argproc_tmp:Nn \argproc_skip_gset_from_user:Nnn { \global #1 = }
+\__argproc_tmp:Nn \argproc_skip_add_from_user:Nnn  { \advance #1 }
+\__argproc_tmp:Nn \argproc_skip_gadd_from_user:Nnn { \global \advance #1 }
+\__argproc_tmp:Nn \argproc_skip_sub_from_user:Nnn  { \advance #1 - }
+\__argproc_tmp:Nn \argproc_skip_gsub_from_user:Nnn { \global \advance #1 - }
 
 % See the comments for \__argproc_dim_chk:w.
 \cs_new_protected:Npn \__argproc_skip_chk:w #1 \__argproc_skip_chk_end:
@@ -221,7 +201,6 @@
 
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
-    \quark_if_recursion_tail_stop:N #1
     \cs_new_protected:Npn #1 ##1##2
       {
         \str_set:Nn \l__argproc_skip_expr_str {##2}
@@ -230,17 +209,13 @@
         \__argproc_skip_chk_no_unit_end:
       }
     \cs_generate_variant:Nn #1 { NV , c , cV }
-    \__argproc_tmp:Nn
   }
-\__argproc_tmp:Nn
-  \argproc_skip_set_from_user:Nn  { #1 = }
-  \argproc_skip_gset_from_user:Nn { \global #1 = }
-  \argproc_skip_add_from_user:Nn  { \advance #1 }
-  \argproc_skip_gadd_from_user:Nn { \global \advance #1 }
-  \argproc_skip_sub_from_user:Nn  { \advance #1 - }
-  \argproc_skip_gsub_from_user:Nn { \global \advance #1 - }
-  \q_recursion_tail { }
-\q_recursion_stop
+\__argproc_tmp:Nn \argproc_skip_set_from_user:Nn  { #1 = }
+\__argproc_tmp:Nn \argproc_skip_gset_from_user:Nn { \global #1 = }
+\__argproc_tmp:Nn \argproc_skip_add_from_user:Nn  { \advance #1 }
+\__argproc_tmp:Nn \argproc_skip_gadd_from_user:Nn { \global \advance #1 }
+\__argproc_tmp:Nn \argproc_skip_sub_from_user:Nn  { \advance #1 - }
+\__argproc_tmp:Nn \argproc_skip_gsub_from_user:Nn { \global \advance #1 - }
 
 \cs_new_protected:Npn \__argproc_skip_chk_no_unit:w #1
   \__argproc_skip_chk_no_unit_end:
@@ -254,7 +229,6 @@
 
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
-    \quark_if_recursion_tail_stop:N #1
     \cs_new_protected:Npn #1 ##1##2
       {
         \str_set:Nn \l__argproc_muskip_expr_str {##2}
@@ -263,17 +237,13 @@
         \__argproc_muskip_chk_end:
       }
     \cs_generate_variant:Nn #1 { NV , c , cV }
-    \__argproc_tmp:Nn
   }
-\__argproc_tmp:Nn
-  \argproc_muskip_set_from_user:Nn  { #1 = }
-  \argproc_muskip_gset_from_user:Nn { \global #1 = }
-  \argproc_muskip_add_from_user:Nn  { \advance #1 }
-  \argproc_muskip_gadd_from_user:Nn { \global \advance #1 }
-  \argproc_muskip_sub_from_user:Nn  { \advance #1 - }
-  \argproc_muskip_gsub_from_user:Nn { \global \advance #1 - }
-  \q_recursion_tail { }
-\q_recursion_stop
+\__argproc_tmp:Nn \argproc_muskip_set_from_user:Nn  { #1 = }
+\__argproc_tmp:Nn \argproc_muskip_gset_from_user:Nn { \global #1 = }
+\__argproc_tmp:Nn \argproc_muskip_add_from_user:Nn  { \advance #1 }
+\__argproc_tmp:Nn \argproc_muskip_gadd_from_user:Nn { \global \advance #1 }
+\__argproc_tmp:Nn \argproc_muskip_sub_from_user:Nn  { \advance #1 - }
+\__argproc_tmp:Nn \argproc_muskip_gsub_from_user:Nn { \global \advance #1 - }
 
 % Issues an error if the user inputs any extra trailing tokens that were not
 % processed by the muskip expression.
