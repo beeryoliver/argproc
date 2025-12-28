@@ -1,15 +1,14 @@
-%%% Package   : argproc - Handle user input into integer, dimen, skip, and
-%%% muskip expressions
-%%% Copyright : 2025 (c) Oliver Beery <beeryoliver@gmail.com>
-%%% CTAN      : <ADD CTAN LINK HERE>
-%%% Repository: https://github.com/beeryoliver/argproc
-%%% License   : The LaTeX Project Public License 1.3c
+% Package   : argproc - Handle user input into integer, dimen, skip, and
+% muskip expressions
+% Copyright : 2025 (c) Oliver Beery <beeryoliver@gmail.com>
+% CTAN      : <ADD CTAN LINK HERE>
+% Repository: https://github.com/beeryoliver/argproc
+% License   : The LaTeX Project Public License 1.3c
 
-%%> \section{Loading the package}
+% Loading the package
 
-% LaTeX2e version 2023-11-01 added \IfExplAtLeastTF.
 \NeedsTeXFormat{LaTeX2e}[2023-11-01]
-\ProvidesExplPackage{argproc}{2025-12-18}{0.0.0}
+\ProvidesExplPackage{argproc}{2025-12-27}{0.0.0}
   {Handle user input into integer, dimen, skip, and muskip expressions.}
 
 \msg_new:nnn { argproc } { l3kernel }
@@ -21,7 +20,7 @@
 \IfExplAtLeastTF { 2023-11-01 } { }
   { \msg_critical:nn { argproc } { l3kernel } }
 
-%%> \section{Variables}
+% Variables
 
 % Stores user input into the expression as a string. This is used in the error
 % messages.
@@ -40,7 +39,7 @@
 \skip_new:N   \l__argproc_tmp_skip
 \muskip_new:N \l__argproc_tmp_muskip
 
-%%> \section{Primitives}
+% Primitives
 
 \cs_new_eq:NN \__argproc_assignment_insert_after:N \afterassignment
 
@@ -54,7 +53,7 @@
 \cs_new_eq:NN \__argproc_skip_expr_end:   \scan_stop:
 \cs_new_eq:NN \__argproc_muskip_expr_end: \scan_stop:
 
-%%> \section{Setting integers from user input}
+% Setting integers from user input
 
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
@@ -88,7 +87,7 @@
   }
 \cs_new_eq:NN \__argproc_int_chk_end: \scan_stop:
 
-%%> \section{Setting dimens from user input}
+% Setting dimens from user input
 
 % \scan_stop: is used here for the case where a skip variable is incorrectly
 % provided as #1.
@@ -177,7 +176,7 @@
   }
 \cs_new_eq:NN \__argproc_dim_chk_no_unit_end: \scan_stop:
 
-%%> \section{Setting skips from user input}
+% Setting skips from user input
 
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
@@ -251,7 +250,7 @@
   }
 \cs_new_eq:NN \__argproc_skip_chk_no_unit_end: \scan_stop:
 
-%%> \section{Setting muskips from user input}
+% Setting muskips from user input
 
 \cs_set_protected:Npn \__argproc_tmp:Nn #1#2
   {
@@ -285,7 +284,7 @@
   }
 \cs_new_eq:NN \__argproc_muskip_chk_end: \scan_stop:
 
-%%> \section{Argument processors}
+% Argument processors
 
 \cs_new_protected:Npn \argproc_int:n #1
   {
@@ -318,7 +317,7 @@
     \tl_set:NV \ProcessedArgument \l__argproc_tmp_muskip
   }
 
-%%> \section{Messages}
+% Messages
 
 \msg_new:nnn { argproc } { int-expr-invalid }
   {
